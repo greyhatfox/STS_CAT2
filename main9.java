@@ -1,35 +1,28 @@
 //Find max eq sum  ----easy weird----
 
-import java.io.*;
+import java.util.*;
 
-class main9 {
+class Main {
 
     static int findMaxSum(int[] arr, int n) {
 
-        int[] preSum = new int[n];
-        int[] suffSum = new int[n];
+        int total = 0;
+        for (int i = 0; i < n; i++) {
+            total += arr[i];
+        }
 
+        int leftSum = 0;
         int ans = Integer.MIN_VALUE;
 
-        preSum[0] = arr[0];
+        for (int i = 0; i < n; i++) {
 
-        for (int i = 1; i < n; i++) {
-            preSum[i] = preSum[i - 1] + arr[i];
-        }
+            int rightSum = total - leftSum - arr[i];
 
-        suffSum[n - 1] = arr[n - 1];
-
-        if (preSum[n - 1] == suffSum[n - 1]) {
-            ans = Math.max(ans, preSum[n - 1]);
-        }
-
-        for (int i = n - 2; i >= 0; i--) {
-
-            suffSum[i] = suffSum[i + 1] + arr[i];
-
-            if (suffSum[i] == preSum[i]) {
-                ans = Math.max(ans, preSum[i]);
+            if (leftSum == rightSum) {
+                ans = Math.max(ans, leftSum);
             }
+
+            leftSum += arr[i];
         }
 
         return ans;
